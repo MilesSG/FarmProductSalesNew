@@ -1,5 +1,6 @@
 import { Product } from '../types/product';
 
+// 修改后的产品数据 - 更新了图片链接
 export const products: Product[] = [
   {
     id: "1",
@@ -50,7 +51,7 @@ export const products: Product[] = [
     price: 39.99,
     unit: "10kg",
     description: "优质东北大米，颗粒饱满，煮出的米饭香糯可口。",
-    imageUrl: "https://images.unsplash.com/photo-1586201375761-83865001e8ac?q=80&w=400&h=300",
+    imageUrl: "https://img.freepik.com/free-photo/raw-organic-white-jasmine-rice_114579-26545.jpg?w=400&h=300",
     stock: 50,
     origin: "黑龙江省",
     harvestDate: "2023-10-15",
@@ -71,7 +72,7 @@ export const products: Product[] = [
     price: 7.99,
     unit: "kg",
     description: "新鲜多汁的西红柿，富含维生素，适合生食或烹饪。",
-    imageUrl: "https://images.unsplash.com/photo-1546094096-0df4bcaad920?q=80&w=400&h=300",
+    imageUrl: "https://img.freepik.com/free-photo/tomatoes_144627-5341.jpg?w=400&h=300",
     stock: 150,
     origin: "云南省",
     harvestDate: "2024-02-22",
@@ -113,7 +114,7 @@ export const products: Product[] = [
     price: 59.99,
     unit: "kg",
     description: "生态养殖的猪肉，肉质鲜嫩，无添加剂，健康美味。",
-    imageUrl: "https://images.unsplash.com/photo-1609252879211-92618771f9de?q=80&w=400&h=300",
+    imageUrl: "https://img.freepik.com/free-photo/raw-pork-meat_1339-6278.jpg?w=400&h=300",
     stock: 30,
     origin: "四川省",
     harvestDate: "2024-02-24",
