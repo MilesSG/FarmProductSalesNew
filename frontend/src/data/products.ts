@@ -66,27 +66,6 @@ export const products: Product[] = [
     reviews: 89
   },
   {
-    id: "4",
-    name: "新鲜西红柿",
-    category: "vegetables",
-    price: 7.99,
-    unit: "kg",
-    description: "新鲜多汁的西红柿，富含维生素，适合生食或烹饪。",
-    imageUrl: "https://img.freepik.com/free-photo/tomatoes_144627-5341.jpg?w=400&h=300",
-    stock: 150,
-    origin: "云南省",
-    harvestDate: "2024-02-22",
-    nutritionFacts: {
-      calories: 18,
-      protein: 0.9,
-      carbs: 3.9,
-      fat: 0.2
-    },
-    isOrganic: false,
-    rating: 4.6,
-    reviews: 104
-  },
-  {
     id: "5",
     name: "有机草莓",
     category: "fruits",
