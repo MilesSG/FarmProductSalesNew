@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "有机胡萝卜",
+    "category": "vegetables",
+    "price": 5.99,
+    "unit": "kg",
+    "description": "新鲜采摘的有机胡萝卜，富含胡萝卜素，适合生食或烹饪。",
+    "imageUrl": "/images/carrot.jpg",
+    "stock": 100,
+    "origin": "山东省",
+    "harvestDate": "2024-02-25",
+    "nutritionFacts": {
+      "calories": 41,
+      "protein": 0.9,
+      "carbs": 9.6,
+      "fat": 0.2
+    },
+    "isOrganic": true,
+    "rating": 4.8,
+    "reviews": 128
+  }
+]
