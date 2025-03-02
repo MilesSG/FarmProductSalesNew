@@ -84,16 +84,3 @@ FarmProductSalesNew/
 - Safari
 - Edge
 
-## 👥 团队成员
-
-- 张三 - 前端开发
-- 李四 - 后端开发
-- 王五 - UI/UX设计
-
-## 📄 许可证
-
-MIT License
-
-## 🙏 鸣谢
-
-感谢所有为本项目做出贡献的开发者和使用者。 

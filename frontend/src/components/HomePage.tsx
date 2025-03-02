@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Card, Row, Col, Rate, Tag, Button, Divider, Tabs } from 'antd';
-import { ShoppingCartOutlined, BarChartOutlined, PieChartOutlined, LineChartOutlined } from '@ant-design/icons';
+import { Layout, Typography, Card, Row, Col, Rate, Tag, Button, Divider, Tabs, Menu } from 'antd';
+import { ShoppingCartOutlined, BarChartOutlined, PieChartOutlined, LineChartOutlined, HomeOutlined, AreaChartOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { products } from '../data/products';
 import ReactECharts from 'echarts-for-react';
 
@@ -42,8 +42,13 @@ const getCategoryName = (category: string): string => {
   return categoryNames[category] || category;
 };
 
-const HomePage: React.FC = () => {
+interface HomePageProps {
+  onLogout: () => void;
+}
+
+const HomePage: React.FC<HomePageProps> = ({ onLogout }) => {
   const [salesData, setSalesData] = useState<number[]>([]);
+  const [activeMenuKey, setActiveMenuKey] = useState<string>('home');
   
   // 模拟动态销售数据
   useEffect(() => {
@@ -205,62 +210,67 @@ const HomePage: React.FC = () => {
     };
   };
 
-  return (
-    <Layout className="min-h-screen bg-gray-50">
-      <Header className="bg-white shadow-md fixed w-full z-10 p-0" style={{ borderBottom: `3px solid ${primaryColor}` }}>
-        <div className="container mx-auto flex justify-between items-center h-full px-4">
-          <Title level={3} className="m-0" style={{ color: primaryColor }}>鲜悦优选</Title>
-          <Button type="primary" icon={<ShoppingCartOutlined />} size="large" style={{ backgroundColor: primaryColor, borderColor: primaryColor }}>
-            购物车
-          </Button>
+  // 处理菜单项点击
+  const handleMenuClick = (e: {key: string}) => {
+    setActiveMenuKey(e.key);
+  };
+
+  // 渲染数据分析内容
+  const renderDataAnalysis = () => {
+    return (
+      <Card className="bg-white rounded-lg shadow-md mt-6">
+        <Title level={4} className="mb-4" style={{ color: primaryColor }}>
+          <BarChartOutlined className="mr-2" />
+          销售数据分析
+        </Title>
+        <Tabs defaultActiveKey="1" type="card" style={{ color: primaryColor }}>
+          <TabPane 
+            tab={<span><LineChartOutlined /> <span style={{ color: primaryColor }}>销售趋势</span></span>}
+            key="1"
+          >
+            <ReactECharts option={getSalesOption()} style={{ height: '350px' }} />
+          </TabPane>
+          <TabPane 
+            tab={<span><PieChartOutlined /> <span style={{ color: primaryColor }}>分类分布</span></span>}
+            key="2"
+          >
+            <ReactECharts option={getCategoryOption()} style={{ height: '350px' }} />
+          </TabPane>
+          <TabPane 
+            tab={<span><BarChartOutlined /> <span style={{ color: primaryColor }}>产品评分</span></span>}
+            key="3"
+          >
+            <ReactECharts option={getRatingOption()} style={{ height: '350px' }} />
+          </TabPane>
+        </Tabs>
+      </Card>
+    );
+  };
+
+  // 渲染产品列表
+  const renderProductsList = () => {
+    return (
+      <>
+        <div className="mt-6">
+          <Divider style={{ borderColor: secondaryColor }}>
+            <Title level={4} className="m-0" style={{ color: primaryColor }}>精选产品</Title>
+          </Divider>
         </div>
-      </Header>
-
-      <Content className="container mx-auto pt-24 px-4 pb-8">
-        <Card className="mb-12 bg-white rounded-lg shadow-md mt-4">
-          <Title level={4} className="mb-4" style={{ color: primaryColor }}>
-            <BarChartOutlined className="mr-2" />
-            销售数据分析
-          </Title>
-          <Tabs defaultActiveKey="1" type="card" style={{ color: primaryColor }}>
-            <TabPane 
-              tab={<span><LineChartOutlined /> <span style={{ color: primaryColor }}>销售趋势</span></span>}
-              key="1"
-            >
-              <ReactECharts option={getSalesOption()} style={{ height: '350px' }} />
-            </TabPane>
-            <TabPane 
-              tab={<span><PieChartOutlined /> <span style={{ color: primaryColor }}>分类分布</span></span>}
-              key="2"
-            >
-              <ReactECharts option={getCategoryOption()} style={{ height: '350px' }} />
-            </TabPane>
-            <TabPane 
-              tab={<span><BarChartOutlined /> <span style={{ color: primaryColor }}>产品评分</span></span>}
-              key="3"
-            >
-              <ReactECharts option={getRatingOption()} style={{ height: '350px' }} />
-            </TabPane>
-          </Tabs>
-        </Card>
-        
-        <Divider style={{ borderColor: secondaryColor }}>
-          <Title level={4} className="m-0" style={{ color: primaryColor }}>精选产品</Title>
-        </Divider>
-
-        <Row gutter={[24, 24]} className="mt-8">
+        <Row gutter={[24, 24]} className="mt-6">
           {products.map(product => (
             <Col xs={24} sm={12} md={8} key={product.id}>
               <Card
                 hoverable
                 cover={
-                  <img
-                    alt={product.name}
-                    src={product.imageUrl}
-                    className="h-60 object-cover"
-                  />
+                  <div className="h-60 overflow-hidden">
+                    <img
+                      alt={product.name}
+                      src={product.imageUrl}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 }
-                className="overflow-hidden"
+                className="h-full"
                 style={{ boxShadow: '0 4px 8px rgba(30, 136, 229, 0.1)' }}
               >
                 <Meta
@@ -302,7 +312,77 @@ const HomePage: React.FC = () => {
             </Col>
           ))}
         </Row>
+      </>
+    );
+  };
+
+  return (
+    <Layout className="min-h-screen bg-gray-50">
+      {/* 顶部横幅 */}
+      <div className="w-full bg-gray-900 text-center py-3 relative">
+        <Typography.Title level={4} style={{ color: '#fff', margin: 0 }}>
+          鲜悦优选
+        </Typography.Title>
+        <Button 
+          type="link" 
+          onClick={onLogout}
+          style={{ 
+            position: 'absolute', 
+            right: '20px', 
+            top: '50%', 
+            transform: 'translateY(-50%)',
+            color: '#fff'
+          }}
+        >
+          退出登录
+        </Button>
+      </div>
+      
+      {/* 导航菜单 */}
+      <div className="bg-white shadow-md w-full sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <Menu 
+            mode="horizontal"
+            selectedKeys={[activeMenuKey]}
+            onClick={handleMenuClick}
+            className="border-0 flex justify-center"
+            style={{ fontSize: '16px' }}
+          >
+            <Menu.Item key="home" icon={<HomeOutlined />}>
+              <span style={{ color: activeMenuKey === 'home' ? primaryColor : undefined }}>首页</span>
+            </Menu.Item>
+            <Menu.Item key="analytics" icon={<AreaChartOutlined />}>
+              <span style={{ color: activeMenuKey === 'analytics' ? primaryColor : undefined }}>销售数据分析</span>
+            </Menu.Item>
+            <Menu.Item key="products" icon={<AppstoreOutlined />}>
+              <span style={{ color: activeMenuKey === 'products' ? primaryColor : undefined }}>全部产品</span>
+            </Menu.Item>
+          </Menu>
+        </div>
+      </div>
+
+      {/* 主内容区 */}
+      <Content className="container mx-auto px-4 py-6">
+        {activeMenuKey === 'analytics' ? renderDataAnalysis() : renderProductsList()}
       </Content>
+
+      {/* 购物车按钮 - 固定在右下角 */}
+      <div className="fixed right-6 bottom-6 z-50">
+        <Button 
+          type="primary" 
+          shape="circle" 
+          icon={<ShoppingCartOutlined />} 
+          size="large" 
+          style={{ 
+            backgroundColor: primaryColor, 
+            borderColor: primaryColor,
+            width: '60px',
+            height: '60px',
+            fontSize: '24px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+          }}
+        />
+      </div>
 
       <Footer className="text-center bg-white py-6" style={{ color: primaryColor, borderTop: `1px solid ${secondaryColor}` }}>
         鲜悦优选 ©{new Date().getFullYear()} FreshJoy Premium Selection
@@ -311,4 +391,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage; 
+export default HomePage;
