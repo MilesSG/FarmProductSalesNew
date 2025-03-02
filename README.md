@@ -13,6 +13,7 @@
 - 🛒 **购物车功能**：便捷的商品添加与管理
 - 🏷️ **有机标签**：清晰标识有机产品
 - 💫 **评分系统**：用户评价与评分展示
+- 🖼️ **智能图片管理**：自动检测并修复失效图片链接
 
 ## 🔧 技术栈
 
@@ -40,6 +41,15 @@ npm install
 
 # 启动开发服务器
 npm run dev
+
+# 检查图片可访问性
+npm run test-images
+
+# 修复柑橘类水果图片
+npm run fix-images
+
+# 扫描并修复所有图片
+npm run scan-all-images
 ```
 
 ### 后端
@@ -67,7 +77,12 @@ FarmProductSalesNew/
 │   ├── src/                 # 源代码
 │   │   ├── components/      # React组件
 │   │   ├── data/            # 模拟数据
-│   │   └── types/           # TypeScript类型定义
+│   │   ├── types/           # TypeScript类型定义
+│   │   └── utils/           # 工具函数
+│   │       ├── imageChecker.js        # 图片检查工具
+│   │       ├── fixCitrusImages.js     # 柑橘类图片修复
+│   │       ├── scanAllImages.js       # 全项目图片扫描
+│   │       └── testImageAvailability.js # 图片可用性测试
 │   ├── package.json         # 依赖管理
 │   └── vite.config.ts       # Vite配置
 ├── backend/                 # 后端FastAPI应用
@@ -77,10 +92,39 @@ FarmProductSalesNew/
 └── README.md                # 项目文档
 ```
 
+## 🖼️ 图片管理系统
+
+项目包含一套智能图片管理系统，用于确保所有产品和横幅图片能够正常显示：
+
+### 特性
+- **自动检测**：检测所有Unsplash图片URL的可访问性
+- **智能替换**：根据图片上下文和用途选择合适的替代图片
+- **分类处理**：为不同类别（水果、蔬菜、柑橘类、横幅等）提供专门的替代图片
+- **全项目扫描**：支持扫描整个项目中的所有文件，找出并修复无效图片URL
+
+### 使用方法
+1. **测试特定图片**：`npm run test-images` - 测试预定义的重要图片URL
+2. **修复柑橘类图片**：`npm run fix-images` - 专门针对柑橘类水果图片进行修复
+3. **全项目图片扫描**：`npm run scan-all-images` - 扫描并修复整个项目中的所有图片
+
+### 添加新图片时的建议格式
+```
+https://images.unsplash.com/photo-ID?auto=format&fit=crop&w=800&q=80  // 产品图片
+https://images.unsplash.com/photo-ID?auto=format&fit=crop&w=1200&h=400&q=80  // 横幅图片
+```
+
 ## 🌐 浏览器支持
 
 - Chrome
 - Firefox
 - Safari
 - Edge
+
+## 📋 待办事项
+
+- [ ] 用户认证系统
+- [ ] 真实支付集成
+- [ ] 移动端App开发
+- [ ] 多语言支持
+- [x] 图片可用性检测与修复系统
 

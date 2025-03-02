@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vue-tsc && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fix-images": "node src/utils/runImageFix.js",
+    "test-images": "node src/utils/testImageAvailability.js",
+    "scan-all-images": "node src/utils/scanAllImages.js"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
